@@ -39,10 +39,11 @@ class Ballot:
     If a voter lists one candidate multiple times, a DuplicateCandidatesError is thrown.
     """
 
-    def __init__(self, ranked_candidates: List[Candidate]):
+    def __init__(self, ranked_candidates: List[Candidate], check_duplicates=True):
         self.ranked_candidates: List[Candidate] = tuple(ranked_candidates)
+        self.check_duplicates = check_duplicates
 
-        if Ballot._is_duplicates(ranked_candidates):
+        if self.check_duplicates and Ballot._is_duplicates(ranked_candidates):
             raise DuplicateCandidatesError
 
         if not Ballot._is_all_candidate_objects(ranked_candidates):
